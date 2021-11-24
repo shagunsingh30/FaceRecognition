@@ -28,11 +28,6 @@ def wishMe():
     speak("I am Tyson, how may i help you sir ?")
 
 def takeCommand():
-    # It takes microphone input from the user and returns string output
-    '''
-
-    :return:
-    '''
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening...")
