@@ -12,6 +12,10 @@ voices = engine.getProperty('voices')
 # print(voices[1].id)
 engine.setProperty('voice', voices[0].id)
 
+
+# j[]= {"library","exam controller office","ninfe","mfnen","fenfie","ofoem","fmefo"}
+# k[]={"b2 lg 2.5", "b3 lg 2.8", " b1 lg 1.5", "b1 lg 3.4","b2 lg 5.6","b3 lg 2.2"}
+
 def speak(audio):
     engine.say(audio)
     engine.runAndWait()
@@ -24,10 +28,16 @@ def wishMe():
     elif 12 <= hour < 18:
         speak("Good Afternoon")
     else:
-        speak("Good Evening")
+        +speak("Good Evening")
     speak("I am Tyson, how may i help you sir ?")
 
+
 def takeCommand():
+    # It takes microphone input from the user and returns string output
+    """
+
+    :return:
+    """
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening...")
@@ -46,7 +56,6 @@ def takeCommand():
     return query
 
 
-
 path = 'imagesattendance'
 images = []
 classnames = []
@@ -56,7 +65,6 @@ for cl in mylist:
     curimg = cv2.imread(f'{path}/{cl}')
     images.append(curimg)
     classnames.append(os.path.splitext(cl)[0])
-
 
 
 def findencodings(images):
@@ -76,15 +84,16 @@ def markattendance(name):
             entry = line.split(',')
             namelist.append(entry[0])
         if name not in namelist:
-            #now = datetime.now()
-            #dtstring = now.strftime('%H:%M:%S')
-
+            # now = datetime.now()
+            # dtstring = now.strftime('%H:%M:%S')
             f.writelines(f'\n{name}')
             speak(f'{name} your attendance has been recorded')
 
 
+#encodelistknown = findencodings(images)
+
 def facerecog():
-    encodelistknown = findencodings(images)
+    # encodelistknown = findencodings(images)
     speak('Wait for your attendance to be taken')
 
     cap = cv2.VideoCapture(0)
@@ -115,21 +124,20 @@ def facerecog():
                 markattendance(name)
                 return 0
 
-
-
         cv2.imshow('webcam', img)
         cv2.waitKey(1)
 
+
 if __name__ == "__main__":
+    encodelistknown = findencodings(images)
     wishMe()
     while True:
-        query=takeCommand().lower()
+        query = takeCommand().lower()
         if 'attendance' in query:
             facerecog()
             speak("Thank you Sir")
-        if 'thank you' in query:
+
+
+        elif 'thank you' in query:
             speak("You are welcome Sir")
             break
-
-
-
